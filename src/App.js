@@ -17,8 +17,6 @@ const App = () => {
   useEffect(() => {
     const load = async () => {
       const token = localStorage.getItem("message_token");
-      console.log("ljksdfdsf");
-      console.log(token);
       if (!token) {
         setAuthorized(false);
         return;
@@ -40,26 +38,16 @@ const App = () => {
     <>
       <BrowserRouter>
         <Routes>
-          {/* <Route path="*" element={<Auth />} />
-          <Route path="chat" element={<Chat />} /> */}
           <Route
             path="*"
             element={
-              <Home setFirstName={setFirstName} setAuthorized={setAuthorized} />
+              <Login setAuthorized={setAuthorized} authorized={authorized} />
             }
           />
           <Route
             path="login"
             element={
-              authorized ? (
-                <Message
-                  authorized={authorized}
-                  setAuthorized={setAuthorized}
-                  firstName={firstName}
-                />
-              ) : (
-                <Login setAuthorized={setAuthorized} />
-              )
+              <Login setAuthorized={setAuthorized} authorized={authorized} />
             }
           />
           <Route path="signup" element={<Signup />} />

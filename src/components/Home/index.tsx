@@ -17,8 +17,6 @@ const Home: React.FunctionComponent<HomeProps> = ({
   useEffect(() => {
     const load = async () => {
       const token = localStorage.getItem("message_token");
-      console.log("ljksdfdsf");
-      console.log(token);
       if (!token) {
         setAuthorized(false);
         navigate("/login");

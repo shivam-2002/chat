@@ -144,6 +144,7 @@ const Message: React.FunctionComponent<MessageProps> = ({
   useEffect(() => {
     if (!authorized) {
       navigate("/login");
+      return;
     }
     createConnection();
     const load = async () => {
@@ -168,6 +169,9 @@ const Message: React.FunctionComponent<MessageProps> = ({
   useEffect(() => {
     const load = async () => {
       const token = localStorage.getItem("message_token");
+      if (!token) {
+        return;
+      }
       const res = await axios.get(
         REACT_APP_BACKEND_BASE_URL + "/api/v1/get-messages",
         {
