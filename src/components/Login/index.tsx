@@ -20,8 +20,12 @@ const REACT_APP_BACKEND_BASE_URL = process.env.REACT_APP_BACKEND_BASE_URL;
 
 interface LoginProps {
   setAuthorized: (val: boolean) => void;
+  authorized: boolean;
 }
-const Login: React.FunctionComponent<LoginProps> = ({ setAuthorized }) => {
+const Login: React.FunctionComponent<LoginProps> = ({
+  setAuthorized,
+  authorized,
+}) => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -70,7 +74,7 @@ const Login: React.FunctionComponent<LoginProps> = ({ setAuthorized }) => {
     if (res && res.data) {
       if (res.data.statusCode === 200) {
         localStorage.setItem("message_token", JSON.stringify(res.data.token));
-        navigate("/");
+        navigate("/message");
         setAuthorized(true);
         toast.success(res.data.message, {
           // position: toast.POSITION.TOP_RIGHT,
@@ -121,7 +125,7 @@ const Login: React.FunctionComponent<LoginProps> = ({ setAuthorized }) => {
           //   position: toast.POSITION.TOP_RIGHT,
           autoClose: 1000,
         });
-        navigate("/");
+        navigate("/message");
       } else {
         setAuthorized(false);
         toast.error(`${userInfo.data.message}`, {
@@ -147,6 +151,13 @@ const Login: React.FunctionComponent<LoginProps> = ({ setAuthorized }) => {
       dataFromGoogle(accessToken);
     }
   }, []);
+
+  useEffect(() => {
+    if (authorized) {
+      navigate("/message");
+      return;
+    }
+  }, [authorized]);
 
   return (
     <StyledLogin>
